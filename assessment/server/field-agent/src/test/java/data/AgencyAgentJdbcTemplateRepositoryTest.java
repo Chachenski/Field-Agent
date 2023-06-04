@@ -1,5 +1,6 @@
-package learn.field_agent.data;
+package data;
 
+import learn.field_agent.data.AgencyAgentJdbcTemplateRepository;
 import learn.field_agent.models.AgencyAgent;
 import learn.field_agent.models.Agent;
 import learn.field_agent.models.SecurityClearance;

@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class AliasMapper implements RowMapper {
+public class AliasMapper implements RowMapper<Alias> {
     @Override
-    public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+    public Alias mapRow(ResultSet resultSet, int i) throws SQLException {
         Alias alias = new Alias();
         alias.setAliasId(resultSet.getInt("alias_id"));
         alias.setName(resultSet.getString("name"));

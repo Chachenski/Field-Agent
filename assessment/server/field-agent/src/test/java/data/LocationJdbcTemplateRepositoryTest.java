@@ -1,5 +1,6 @@
-package learn.field_agent.data;
+package data;
 
+import learn.field_agent.data.LocationJdbcTemplateRepository;
 import learn.field_agent.models.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
