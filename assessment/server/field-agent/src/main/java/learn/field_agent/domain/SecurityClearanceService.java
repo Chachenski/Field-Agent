@@ -18,10 +18,15 @@ public class SecurityClearanceService {
         this.agencyAgentRepository = agencyAgentRepository;
     }
 
-    //    List<SecurityClearance> findAll()
-//    SecurityClearance findById(int securityClearanceId)
+    public List<SecurityClearance> findAll() {
+        return repository.findAll();
+    }
 
-    Result<SecurityClearance> add(SecurityClearance securityClearance) {
+    public SecurityClearance findById(int securityClearanceId) {
+        return repository.findById(securityClearanceId);
+    }
+
+    public Result<SecurityClearance> add(SecurityClearance securityClearance) {
         Result<SecurityClearance> result = validate(securityClearance);
         if (!result.isSuccess()) {
             return result;
@@ -35,8 +40,26 @@ public class SecurityClearanceService {
         return result;
     }
 
-//    Result<SecurityClearance> update(SecurityClearance securityClearance)
-//    Result<SecurityClearance> deleteById(int securityClearanceId)
+    public Result<SecurityClearance> update(SecurityClearance securityClearance) {
+        Result<SecurityClearance> result = validate(securityClearance);
+        if (!result.isSuccess()) {
+            return result;
+        }
+        if (securityClearance.getSecurityClearanceId() <= 0) {
+            result.addMessage("securityClearanceId must be set", ResultType.INVALID);
+            return result;
+        }
+        if (!repository.update(securityClearance)) {
+            String msg = String.format("securityClearanceId: %s does not exist", securityClearance.getSecurityClearanceId());
+            result.addMessage(msg, ResultType.NOT_FOUND);
+        }
+        return result;
+    }
+
+    public Result<SecurityClearance> deleteById(int securityClearanceId) {
+            repository.deleteById(securityClearanceId);
+            return new Result<SecurityClearance>();
+    }
 
     private Result<SecurityClearance> validate(SecurityClearance securityClearance) {
         Result<SecurityClearance> result = new Result<>();

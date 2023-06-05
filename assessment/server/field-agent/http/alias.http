@@ -58,4 +58,6 @@ Content-Type: application/json
     "name": ""
 }
 
-### [ ] DELETE 
+### [ ] DELETE
+
+DELETE {{url}}/1 HTTP/1.1

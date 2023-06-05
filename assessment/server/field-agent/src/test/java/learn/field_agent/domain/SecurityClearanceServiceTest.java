@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class SecurityClearanceServiceTest {
@@ -33,5 +36,29 @@ class SecurityClearanceServiceTest {
 //        when(agencyAgentRepository.add(1)).thenReturn(null);
         result = service.add(securityClearance);
         assertEquals(ResultType.INVALID, result.getType());
+    }
+
+    @Test
+    void shouldNotAddIfSecurityClearanceIdIsGreaterThanZero() {
+        SecurityClearance securityClearance = new SecurityClearance();
+        securityClearance.setSecurityClearanceId(5);
+        Result<SecurityClearance> result = service.add(securityClearance);
+        assertEquals(ResultType.INVALID, result.getType());
+    }
+
+    @Test
+    void shouldNotAddEmptyBlankName() {
+        SecurityClearance securityClearance = new SecurityClearance();
+        securityClearance.setSecurityClearanceId(0);
+        securityClearance.setName("");
+        Result<SecurityClearance> result = service.add(securityClearance);
+        assertEquals(ResultType.INVALID, result.getType());
+    }
+
+    @Test
+    void shouldFindExistingSecurityClearanceName() {
+        SecurityClearance topSecret = new SecurityClearance();
+        when(repository.findById(1)).thenReturn((SecurityClearance) List.of(topSecret));
+        assertNotNull(topSecret);
     }
 }
