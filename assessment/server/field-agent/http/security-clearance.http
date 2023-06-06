@@ -50,8 +50,8 @@ PUT {{url}}/1 HTTP/1.1
 Content-Type: application/json
 
 {
-    "securityClearanceId": 5,
-    "name": "Laaa"
+    "securityClearanceId": 1,
+    "name": "Joe"
 }
 
 ### 400 Error
@@ -60,9 +60,10 @@ PUT {{url}}/1 HTTP/1.1
 Content-Type: application/json
 
 {
+    "securityClearanceId": "",
     "name": ""
 }
 
 ### Delete a security clearance
 
-DELETE {{url}}/4 HTTP/1.1
+DELETE {{url}}/3 HTTP/1.1
