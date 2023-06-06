@@ -3,10 +3,12 @@ package learn.field_agent.domain;
 import learn.field_agent.data.AgencyAgentRepository;
 import learn.field_agent.data.SecurityClearanceRepository;
 import learn.field_agent.models.AgencyAgent;
+import learn.field_agent.models.Alias;
 import learn.field_agent.models.SecurityClearance;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SecurityClearanceService {
@@ -32,7 +34,7 @@ public class SecurityClearanceService {
             return result;
         }
         if (securityClearance.getSecurityClearanceId() != 0) {
-            result.addMessage("securityClearanceId cannot be added!", ResultType.INVALID);
+            result.addMessage("securityClearanceId cannot be set for `add` operation", ResultType.INVALID);
             return result;
         }
         securityClearance = repository.add(securityClearance);
@@ -69,9 +71,14 @@ public class SecurityClearanceService {
         }
         if (securityClearance.getName() == null || securityClearance.getName().isBlank()) {
             result.addMessage("Name of Security Clearance is required", ResultType.INVALID);
-        }
-        if (securityClearance.getSecurityClearanceId() == 0) {
-            result.addMessage("securityClearanceId is required", ResultType.INVALID);
+        } else {
+            List<SecurityClearance> existingClearances = repository.findAll();
+            for (SecurityClearance existingClearance : existingClearances) {
+                if (existingClearance.getName().equals(securityClearance.getName())) {
+                    result.addMessage("Security Clearance with the same name already exists", ResultType.INVALID);
+                    break;
+                }
+            }
         }
         return result;
     }

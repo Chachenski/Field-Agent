@@ -11,7 +11,7 @@ Content-Type: application/json
 
 {
     "agentId": 1,
-    "name": "Testing"
+    "name": "New"
 }
 
 ### [ ] Post return a 400 if the alias fails a domain rule - name required
