@@ -56,11 +56,18 @@ public class SecurityClearanceController {
         return ErrorResponse.build(result);
     }
 
-    @DeleteMapping("/{clearanceId}")
-    public ResponseEntity<Object> deleteById(@PathVariable int clearanceId){
-        Result<SecurityClearance> result = service.deleteById(clearanceId);
+    @DeleteMapping("/{securityClearanceId}")
+    public ResponseEntity<Object> deleteById(@PathVariable int securityClearanceId){
+        Result<SecurityClearance> result = service.deleteById(securityClearanceId);
+        SecurityClearance securityClearance = service.findById(securityClearanceId);
+        if (securityClearance == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         if (result.isSuccess()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        if(securityClearanceId == securityClearance.getSecurityClearanceId()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return ErrorResponse.build(result);
     }

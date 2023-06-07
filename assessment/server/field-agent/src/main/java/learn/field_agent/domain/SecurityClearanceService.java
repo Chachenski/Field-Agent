@@ -80,6 +80,15 @@ public class SecurityClearanceService {
                 }
             }
         }
+
+        List<SecurityClearance> existingClearances = repository.findAll();
+        boolean clearanceExists = false;
+
+        for (SecurityClearance existingClearance : existingClearances) {
+            if (existingClearance.getSecurityClearanceId() == securityClearance.getSecurityClearanceId()) {
+                clearanceExists = true;
+            }
+        }
         return result;
     }
 }
