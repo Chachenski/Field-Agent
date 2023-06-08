@@ -10,7 +10,7 @@
 GET {{url}} HTTP/1.1
 
 ### GET BY ID
-GET {{url}}/3 HTTP/1.1
+GET {{url}}/1 HTTP/1.1
 
 ### 404 Error
 GET {{url}}/10 HTTP/1.1
@@ -65,3 +65,6 @@ DELETE {{url}}/3 HTTP/1.1
 ### 404 Error 
 
 DELETE {{url}}/4 HTTP/1.1
+
+### 400 Error - Security Clearance in use
+DELETE {{url}}/1 HTTP/1.1
