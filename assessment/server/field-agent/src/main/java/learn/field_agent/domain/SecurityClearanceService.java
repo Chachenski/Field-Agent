@@ -59,8 +59,19 @@ public class SecurityClearanceService {
     }
 
     public Result<SecurityClearance> deleteById(int securityClearanceId) {
-            repository.deleteById(securityClearanceId);
-            return new Result<SecurityClearance>();
+        Result<SecurityClearance> result = new Result<>();
+        SecurityClearance securityClearance = findById(securityClearanceId);
+
+        if (securityClearance == null) {
+            result.addMessage("Security Clearance not found", ResultType.NOT_FOUND);
+            return result;
+        }
+
+        if (repository.getUsageCount(securityClearanceId) > 0) {
+            result.addMessage("Security Clearance is in use; cannot delete", ResultType.INVALID);
+            return result;
+        }
+        return result;
     }
 
     private Result<SecurityClearance> validate(SecurityClearance securityClearance) {

@@ -59,15 +59,8 @@ public class SecurityClearanceController {
     @DeleteMapping("/{securityClearanceId}")
     public ResponseEntity<Object> deleteById(@PathVariable int securityClearanceId){
         Result<SecurityClearance> result = service.deleteById(securityClearanceId);
-        SecurityClearance securityClearance = service.findById(securityClearanceId);
-        if (securityClearance == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        if (result.isSuccess()){
+        if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        if(securityClearanceId == securityClearance.getSecurityClearanceId()) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return ErrorResponse.build(result);
     }
