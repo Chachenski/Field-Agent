@@ -71,6 +71,11 @@ public class SecurityClearanceService {
             result.addMessage("Security Clearance is in use; cannot delete", ResultType.INVALID);
             return result;
         }
+
+        if (!repository.deleteById(securityClearanceId)) {
+            result.addMessage("Failed to delete Security Clearance", ResultType.INVALID);
+        }
+        result.setPayload(securityClearance);
         return result;
     }
 

@@ -60,7 +60,7 @@ public class SecurityClearanceController {
     public ResponseEntity<Object> deleteById(@PathVariable int securityClearanceId){
         Result<SecurityClearance> result = service.deleteById(securityClearanceId);
         if (result.isSuccess()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 404
         }
         return ErrorResponse.build(result);
     }
