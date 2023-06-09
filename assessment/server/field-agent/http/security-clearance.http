@@ -1,0 +1,70 @@
+@url = http://localhost:8080/api/securityclearance
+
+# @GetMapping List<SecurityClearance> findAll()
+# @GetMapping("/{securityClearanceId}") ResponseEntity<Object> findById(@PathVariable int securityClearnaceId)
+# @PostMapping ResponseEntity<Object> add(@RequestBody SecurityClearance securityClearance)
+# @PutMapping("/{securityClearanceId}") ResponseEntity<Object> update(@PathVariable int securityClearanceId, @RequestBody SecurityClearance securityClearance)
+# @DeleteMapping("/{securityClearanceId}") ResponseEntity<Object> deleteById(@PathVariable int securityClearanceId)
+
+### GET All
+GET {{url}} HTTP/1.1
+
+### GET BY ID
+GET {{url}}/1 HTTP/1.1
+
+### 404 Error
+GET {{url}}/10 HTTP/1.1
+
+### Post a security clearance
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Confidential"
+}
+
+### 400 error - empty name field
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": ""
+}
+
+### 400 error - duplicate name
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Confidential"
+}
+
+### Put a security clearance
+PUT {{url}}/3 HTTP/1.1
+Content-Type: application/json
+
+{
+    "securityClearanceId": 3,
+    "name": "Test Clearance"
+}
+
+### 400 Error
+
+PUT {{url}}/3 HTTP/1.1
+Content-Type: application/json
+
+{
+    "securityClearanceId": 3,
+    "name": ""
+}
+
+### Delete a security clearance
+
+DELETE {{url}}/3 HTTP/1.1
+
+### 404 Error 
+
+DELETE {{url}}/4 HTTP/1.1
+
+### 400 Error - Security Clearance in use
+DELETE {{url}}/1 HTTP/1.1
