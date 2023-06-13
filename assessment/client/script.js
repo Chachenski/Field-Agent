@@ -7,173 +7,130 @@ displayAllButton.addEventListener("click", displayAllAgents);
 addAgentButton.addEventListener("click", addAgent);
 
 // Display All Agents
-function displayAllAgents(event) {
-  event.preventDefault();
+let Agents = [];
+let editAgentId = 0;
 
-  fetch("/api/agent")
-    .then((response) => response.json())
-    .then((agents) => {
-      let content = "<h2>All Agents</h2>";
-
-      if (agents.length > 0) {
-        content += "<ul class='agent-list'>";
-        agents.forEach((agent) => {
-          content += `
-            <li>
-              <span>${agent.name} - ${agent.code}</span>
-              <div class="agent-actions">
-                <button onclick="editAgent(${agent.id})">Edit</button>
-                <button onclick="deleteAgent(${agent.id})">Delete</button>
-              </div>
-            </li>
-          `;
-        });
-        content += "</ul>";
-      } else {
-        content += "<p>No agents found.</p>";
-      }
-
-      mainContent.innerHTML = content;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      mainContent.innerHTML = "<p>An error occurred while fetching agents.</p>";
-    });
+function displayList() {
+  setCurrentView("List");
+  getAgents().then((data) => {
+    Agents = data;
+    renderList(data);
+  });
 }
 
-// Add Agent
-function addAgent(event) {
-  event.preventDefault();
-
-  mainContent.innerHTML = `
-    <h2>Add Agent</h2>
-    <form id="addAgentForm">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required>
-
-      <label for="code">Code:</label>
-      <input type="text" id="code" name="code" required>
-
-      <button type="submit">Add</button>
-      <button type="button" onclick="displayAllAgents(event)">Cancel</button>
-    </form>
-  `;
-
-  const addAgentForm = document.getElementById("addAgentForm");
-  addAgentForm.addEventListener("submit", submitAddAgentForm);
+function getAgents() {
+  return fetch("http://localhost:8080/api/agent").then((response) => {
+    return response.json();
+  });
 }
 
-// Submit Add Agent form
-function submitAddAgentForm(event) {
-  event.preventDefault();
+function renderList(Agents) {
+  const tableBodyElement = document.getElementById("tableRows");
+  console.log(Agents);
+  const agentHTML = Agents.map((agent) => {
+    return `
+        <tr>
+        <td>${agent.firstName}</td>
+        <td>${agent.middleName}</td>
+        <td>${agent.lastName}</td>
+        <td>${agent.dob}</td>
+        <td>${agent.heightInInches}</td>
+        <td>${agent.agencies}</td>
+        <td>${agent.aliases}</td>
+        <td>
+            <button onclick="handleEditAgent(${agent.id})">Edit</button>
+            <button onclick="handleDeleteAgent(${agent.id})">Delete</button>
+        </td>
+    </tr>
+    `;
+  });
+  tableBodyElement.innerHTML = agentHTML.join("");
+}
 
-  const name = document.getElementById("name").value;
-  const code = document.getElementById("code").value;
-
-  fetch("/api/agent", {
+/** DO HTTP METHODS */
+function doPost(agent) {
+  const init = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, code }),
-  })
-    .then((response) => response.json())
+    body: JSON.stringify(agent),
+  };
+
+  fetch("http://localhost:8080/api/agent", init)
+    .then((response) => {
+      if (response.status === 201 || response.status === 400) {
+        return response.json();
+      } else {
+        return Promise.reject(`Unexpected status code: ${response.status}`);
+      }
+    })
     .then((data) => {
-      displayAllAgents(event);
+      if (data.id) {
+        displayList();
+        resetState();
+      } else {
+        renderErrors(data);
+      }
     })
-    .catch((error) => {
-      console.error("Error:", error);
-      mainContent.innerHTML =
-        "<p>An error occurred while adding the agent.</p>";
-    });
+    .catch(console.log);
 }
 
-// Edit Agent
-function editAgent(agentId) {
-  fetch(`/api/agent/${agentId}`)
-    .then((response) => response.json())
-    .then((agent) => {
-      mainContent.innerHTML = `
-        <h2>Edit Agent</h2>
-        <form id="editAgentForm">
-          <label for="name">Name:</label>
-          <input type="text" id="name" name="name" value="${agent.name}" required>
+function doPut(agent) {
+  agent.id = editAgentId;
 
-          <label for="code">Code:</label>
-          <input type="text" id="code" name="code" value="${agent.code}" required>
-
-          <button type="submit">Update</button>
-          <button type="button" onclick="displayAllAgents(event)">Cancel</button>
-        </form>
-      `;
-
-      const editAgentForm = document.getElementById("editAgentForm");
-      editAgentForm.addEventListener("submit", (event) =>
-        submitEditAgentForm(event, agentId)
-      );
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      mainContent.innerHTML =
-        "<p>An error occurred while fetching the agent.</p>";
-    });
-}
-
-// Submit Edit Agent form
-function submitEditAgentForm(event, agentId) {
-  event.preventDefault();
-
-  const name = document.getElementById("name").value;
-  const code = document.getElementById("code").value;
-
-  fetch(`/api/agent/${agentId}`, {
+  const init = {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, code }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      displayAllAgents(event);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      mainContent.innerHTML =
-        "<p>An error occurred while updating the agent.</p>";
-    });
-}
+    body: JSON.stringify(agent),
+  };
 
-// Delete Agent
-function deleteAgent(agentId) {
-  fetch(`/api/agent/${agentId}`)
-    .then((response) => response.json())
-    .then((agent) => {
-      const confirmDeletion = confirm(
-        `Are you sure you want to delete the agent '${agent.name}'?`
-      );
-
-      if (confirmDeletion) {
-        fetch(`/api/agent/${agentId}`, {
-          method: "DELETE",
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            displayAllAgents();
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            mainContent.innerHTML =
-              "<p>An error occurred while deleting the agent.</p>";
-          });
+  fetch(`http://localhost:8080/api/agent/${editAgentId}`, init)
+    .then((response) => {
+      if (response.status === 204) {
+        return agent;
+      } else if (response.status === 400) {
+        return response.json();
+      } else {
+        return Promise.reject(`Unexpected status code: ${response.status}`);
       }
     })
-    .catch((error) => {
-      console.error("Error:", error);
-      mainContent.innerHTML =
-        "<p>An error occurred while fetching the agent.</p>";
-    });
+    .then((data) => {
+      if (data.id) {
+        displayList();
+        resetState();
+      } else {
+        renderErrors(data);
+      }
+    })
+    .catch(console.log);
 }
 
-// Display All Agents
-displayAllAgents();
+// Handle Delete
+function handleDeleteAgent(agentId) {
+  const agent = Agents.find(
+    (agent) => agent.id === agentId
+  );
+  if (
+    confirm(
+      `Delete the agent at location: ${agent.firstName} - ${agent.middleName} - ${agent.lastName}`
+    )
+  ){
+    const init = {
+      method: "DELETE",
+    };
+
+    fetch(`http://localhost:8080/api/agent/${agentId}`, init)
+      .then((response) => {
+        if (response.status === 204) {
+          displayList();
+          resetState();
+        } else {
+          return Promise.reject(`Unexpected Status code: ${response.status}`);
+        }
+      })
+      .catch(console.log);
+  }
+};

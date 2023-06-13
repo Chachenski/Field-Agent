@@ -8,18 +8,66 @@
   <header>
     <h1>Field Agent Mission</h1>
   </header>
-
-  <nav>
-    <div class="button-container">
-      <button id="displayAllButton">Display All Agents</button>
-      <button id="addAgentButton">Add Agent</button>
-      <button id="updateAgentButton">Update Agent</button>
-      <button id="deleteAgentButton">Delete Agent</button>
+  <div class="container">
+    <div id="formContainer">
+        <h2 id="formHeading">Add an Agent</h2>
+        <div id="error">
+        </div>
+        <form onsubmit="handleSubmit(event)" id="form">
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input id="firstName" name="firstName" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="middleName">Middle Name:</label>
+                <input id="middleName" name="middleName" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input id="lastName" name="lastName" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="dob">DOB:</label>
+                <input id="dob" name="dob" type="date" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="heightInInches">Height in Inches:</label>
+                <input id="heightInInches" name="heightInInches" type="number" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="agencies">Agencies:</label>
+                <textarea id="agencies" name="agencies" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="aliases">Aliases:</label>
+                <textarea id="aliases" name="aliases" class="form-control"></textarea>
+            </div>
+            <button type="submit" id="formSubmitButton">Submit</button>
+            <button type="button" onclick="resetState()">Cancel</button>
+        </form>
     </div>
-  </nav>
-
-  <main id="mainContent">
-  </main>
+    <div id="listContainer">
+        <h2>Agents</h2>
+        <button class="btn btn-dark" onclick="handleAddAgent()">Add Agent</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Last Name</th>
+                    <th>DOB</th>
+                    <th>Height in Inches</th>
+                    <th>Agencies</th>
+                    <th>Aliases</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody id="tableRows">
+                <!--we are going to inject our HTML-->
+            </tbody>
+        </table>
+      </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

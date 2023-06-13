@@ -4,6 +4,9 @@ body {
   padding: 0;
   background: linear-gradient(to bottom, #a8c0ff, #3f74ff);
   color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 header {
@@ -12,37 +15,19 @@ header {
   text-align: center;
 }
 
-h1 {
-  margin: 0;
-  font-size: 28px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-nav {
-  text-align: center;
-  padding: 20px 0;
-}
-
-.button-container {
+#formContainer {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  margin: 0 auto;
 }
 
-.button-container button {
-  padding: 10px 20px;
-  margin: 0 10px;
-  font-size: 16px;
-  background-color: #4286f4;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-.button-container button:hover {
-  background-color: #1c63e4;
-}
-
-main {
-  padding: 20px;
+#listContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: auto;
 }
