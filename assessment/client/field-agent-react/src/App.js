@@ -17,7 +17,7 @@ function App() {
           <Route path="/agents/add" element={<AgentsForm />} />
           <Route path="/agents/edit/:id" element={<AgentsForm />} />
           {/* <Route path="/agents/delete/:id" element={<DeleteAgent />} /> */}
-          {/* <Route path="*" element={<NotFound />} /> */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </div>

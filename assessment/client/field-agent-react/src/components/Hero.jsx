@@ -3,10 +3,10 @@ import jamesBondTrailer from "../assets/007.mp4"
 
 const Hero = () => {
   return (
-    <div>
+    <div font-007>
       <div className="video">
         <video
-          className="object-cover h-4/6 w-full absolute -z-10"
+          className="object-cover h-4/6 w-full absolute"
           src={jamesBondTrailer}
           autoPlay
           loop

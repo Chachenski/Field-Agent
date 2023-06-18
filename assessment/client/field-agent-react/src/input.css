@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.cdnfonts.com/css/007-goldeneye');
+
+.font-007 {
+  font-family: "007 GoldenEye", "sans-serif";
+}
+
+/* @layer utilities {
+  .bg-class {
+    background-image: url("https://wallpaperaccess.com/full/2198207.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+} */

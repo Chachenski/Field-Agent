@@ -55,25 +55,26 @@ const Agents = () => {
   };
 
   return (
-    <>
-      <main className="container">
+    <div>
+      <main className="container font-007 text-2xl">
         <section id="listContainer">
           <h2>Agents</h2>
-          <button
-            className="btn btn-primary my-4"
-            onClick={() => navigate("/agents/add")}
-          >
-            <i className="bi bi-plus-circle"></i> Add Agent
-          </button>
+          <div className="border-solid">
+            <button onClick={() => navigate("/agents/add")}>
+              <i></i> Add Agent
+            </button>
+          </div>
           <table>
             <thead>
               <tr>
-                <th>First Name</th>
-                <th>Middle Name</th>
-                <th>Last Name</th>
-                <th>DOB</th>
-                <th>Height In Inches</th>
-                <th>&nbsp;</th>
+                <div className="flex py-6 px-4">
+                  <th className="px-4">First Name</th>
+                  <th className="px-4">Middle Name</th>
+                  <th className="px-4">Last Name</th>
+                  <th className="px-4">DOB</th>
+                  <th className="px-4">Height In Inches</th>
+                  <th>&nbsp;</th>
+                </div>
               </tr>
             </thead>
             <tbody>
@@ -87,7 +88,7 @@ const Agents = () => {
                   <td>
                     <div className="float-right mr-2">
                       <Link
-                        className="btn btn-primary btn-sm mr-2"
+                        className="border-solid"
                         to={`/agents/edit/${agent.id}`}
                       >
                         <i className="bi bi-pencil-square"></i> Edit
@@ -106,7 +107,7 @@ const Agents = () => {
           </table>
         </section>
       </main>
-    </>
+    </div>
   );
 }
 

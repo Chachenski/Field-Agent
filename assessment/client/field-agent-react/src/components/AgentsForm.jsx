@@ -124,9 +124,9 @@ function AgentsForm() {
 
   return (
     <>
-      <main className="container">
+      <main className="flex flex-col container font-007 text-2xl px-4 py-4">
         <section id="formContainer">
-          <h2 id="formHeading">
+          <h2 id="formHeading" className="py-2 mb-2">
             {id > 0 ? "Update Agent" : "Add Agent"}
           </h2>
           {errors.length > 0 && (
@@ -146,62 +146,73 @@ function AgentsForm() {
                 id="firstName"
                 name="firstName"
                 type="text"
-                className="form-control"
+                className="form-control py-2 px-4 mb-2"
                 value={agent.firstName}
                 onChange={handleChange}
               />
             </fieldset>
             <fieldset className="form-group">
-              <label htmlFor="middleName">Middle Name:</label>
+              <label htmlFor="middleName" className="mb-2">
+                Middle Name:
+              </label>
               <input
                 id="middleName"
                 name="middleName"
                 type="text"
-                className="form-control"
+                className="form-control py-2 px-4 mb-2"
                 value={agent.middleName}
                 onChange={handleChange}
               />
             </fieldset>
             <fieldset className="form-group">
-              <label htmlFor="lastName">Last Name:</label>
+              <label htmlFor="lastName" className="mb-2">
+                Last Name:
+              </label>
               <input
                 id="lastName"
                 name="lastName"
                 type="text"
-                className="form-control"
+                className="form-control py-2 px-4 mb-2"
                 value={agent.lastName}
                 onChange={handleChange}
               />
             </fieldset>
             <fieldset className="form-group">
-              <label htmlFor="dob">DOB:</label>
+              <label htmlFor="dob" className="mb-2">
+                DOB:
+              </label>
               <input
                 id="dob"
                 name="dob"
                 type="date"
-                className="form-control"
+                className="form-control py-2 px-4 mb-2 appearance-none bg-transparent" // The date icon is still appearing
                 value={agent.dob}
                 onChange={handleChange}
               />
             </fieldset>
             <fieldset className="form-group">
-              <label htmlFor="heightInInches">Height in Inches:</label>
+              <label htmlFor="heightInInches" className="mb-2">
+                Height in Inches:
+              </label>
               <input
                 id="heightInInches"
                 name="heightInInches"
                 type="number"
-                checked={agent.heightInInches}
+                className="form-control py-2 px-4 mb-2"
+                value={agent.heightInInches}
                 onChange={handleChange}
               />
             </fieldset>
             <div className="mt-4">
-              <button className="btn btn-success mr-2" type="submit">
+              <button
+                className="bg-black hover:bg-gray-900 text-white font-bold py-2 px-4 rounded mr-2"
+                type="submit"
+              >
                 <i className="bi bi-file-earmark-check"></i>{" "}
                 {id > 0 ? "Update Agent" : "Add Agent"}
               </button>
               <Link
-                className="btn btn-warning"
-                type="button"
+                className="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded"
                 to={"/agents"}
               >
                 <i className="bi bi-stoplights"></i> Cancel
