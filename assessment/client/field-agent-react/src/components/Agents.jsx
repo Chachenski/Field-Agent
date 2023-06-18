@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, } from 'react-router-dom';
 
+// Todo - Add a resetState function
+// Confirmation message to echo back to the user of success or failure
+
 const Agents = () => {
   // set the state and useNavigate hook
   const [agents, setAgents] = useState([]);
@@ -90,7 +93,7 @@ const Agents = () => {
             </thead>
             <tbody className="absolute px-4">
               {agents.map((agent) => (
-                <tr key={agent.id}>
+                <tr key={agent.agentId}>
                   <td className="px-4">{agent.firstName}</td>
                   <td className="px-24">{agent.middleName}</td>
                   <td className="px-4">{agent.lastName}</td>
@@ -100,7 +103,7 @@ const Agents = () => {
                     <div className="flex justify-end">
                       <Link
                         className="px-4 py-2 text-white bg-black hover:bg-gray-800 rounded mr-2 flex-1 text-center"
-                        to={`/agents/edit/${agent.id}`}
+                        to={`/agents/edit/${agent.agentId}`}
                       >
                         Edit
                       </Link>

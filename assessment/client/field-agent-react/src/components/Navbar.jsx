@@ -10,7 +10,7 @@ const Navbar = () => {
       <Link to={"/contact"}>Contact</Link>
       <Link to={"/agents"}>Agents</Link>
       <Link to={"/agents/add"}>Add Agents</Link>
-      <Link to={"/agents/edit/:id"}>Edit Agents</Link>
+      {/* <Link to={"/agents/edit/:id"}>Edit Agents</Link> */}
       {/* <Link to={"/agents/delete/:id"}>Delete Agents</Link> */}
     </div>
   );
