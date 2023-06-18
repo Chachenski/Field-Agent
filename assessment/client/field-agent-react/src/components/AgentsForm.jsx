@@ -6,7 +6,7 @@ const AGENTS_DEFAULT = {
   firstName: "John",
   middleName: "M",
   lastName: "Doe",
-  dob: new Date(1900, 1, 10),
+  dob: new Date(),
   heightInInches: 72
 }
 
@@ -92,7 +92,7 @@ function AgentsForm() {
   // Update Agent
   const updateAgent = () => {
     // assign an id
-    agent.id = id;
+    agent.agentId = id;
 
     const init = {
       method: "PUT",
@@ -208,14 +208,14 @@ function AgentsForm() {
                 className="bg-black hover:bg-gray-900 text-white font-bold py-2 px-4 rounded mr-2"
                 type="submit"
               >
-                <i className="bi bi-file-earmark-check"></i>{" "}
+                {" "}
                 {id > 0 ? "Update Agent" : "Add Agent"}
               </button>
               <Link
                 className="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded"
                 to={"/agents"}
               >
-                <i className="bi bi-stoplights"></i> Cancel
+                Cancel
               </Link>
             </div>
           </form>
@@ -225,4 +225,4 @@ function AgentsForm() {
   );
 }
 
-export default AgentsForm
+export default AgentsForm;

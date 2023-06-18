@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, } from 'react-router-dom';
 
 const Agents = () => {
   // set the state and useNavigate hook
   const [agents, setAgents] = useState([]);
   const navigate = useNavigate();
+
   // url
   const url = "http://localhost:8080/api/agent";
   // useEffect is used in conjunction with the API fetch to set the state of Agents
@@ -27,8 +28,14 @@ const Agents = () => {
   const handleDeleteAgent = (agentId) => {
     // find the first agent match
     const agent = agents.find(
-      (agent) => agent.id === agentId
+      (agent) => agent.agentId === agentId
     );
+    console.log({ agent, agents, agentId });
+    // Does the agent exist?
+    if (!agent) {
+      console.log(`Agent not found with id: ${agentId}`);
+      return;
+    }
     // Confirmation
     if (
       window.confirm(
@@ -41,16 +48,19 @@ const Agents = () => {
       fetch(`${url}/${agentId}`, init)
         .then((response) => {
           if (response.status === 204) {
-            const newAgents = Agents.filter(
-              (agent) => agent.id !== agentId
+            const newAgents = agents.filter(
+              agent => agent.agentId !== agentId
             );
             setAgents(newAgents);
-            //resetState();
+
           } else {
             return Promise.reject(`Unexpected Status code: ${response.status}`);
           }
         })
-        .catch(console.log);
+        .catch(error => {
+          console.log(error)
+          // console.log(agentId)
+        });
     }
   };
 
@@ -96,7 +106,7 @@ const Agents = () => {
                       </Link>
                       <button
                         className="px-4 py-2 text-black bg-white hover:bg-gray-200 rounded flex-1 text-center"
-                        onClick={() => handleDeleteAgent(agent.id)}
+                        onClick={() => handleDeleteAgent(agent.agentId)}
                       >
                         Delete
                       </button>
