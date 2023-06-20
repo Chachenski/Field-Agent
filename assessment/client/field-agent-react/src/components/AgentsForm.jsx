@@ -16,7 +16,7 @@ function AgentsForm() {
   const [errors, setErrors] = useState([]);
   // URL
   const url = "http://localhost:8080/api/agent";
-  // useNavigate, useParams and useHistory hooks
+  // useNavigate, useParams 
   const navigate = useNavigate();
   const { id } = useParams(); // Destructure the id to pass as the params
 
@@ -111,7 +111,7 @@ function AgentsForm() {
         }
       })
       .then((data) => {
-        if (data) {
+        if (!data) {
           navigate("/agents");
         } else {
           setErrors(data);
