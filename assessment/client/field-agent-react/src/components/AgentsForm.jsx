@@ -16,7 +16,7 @@ function AgentsForm() {
   const [errors, setErrors] = useState([]);
   // URL
   const url = "http://localhost:8080/api/agent";
-  // useNavigate and useParams hooks
+  // useNavigate, useParams and useHistory hooks
   const navigate = useNavigate();
   const { id } = useParams(); // Destructure the id to pass as the params
 
@@ -74,13 +74,11 @@ function AgentsForm() {
         if (response.status === 201 || response.status === 400) {
           return response.json();
         } else {
-          return Promise.reject(
-            `Unexpected status code: ${response.status}`
-          );
+          return Promise.reject(`Unexpected status code: ${response.status}`);
         }
       })
       .then((data) => {
-        if (data.id) {
+        if (!data.id) {
           navigate("/agents");
         } else {
           setErrors(data);
@@ -113,7 +111,7 @@ function AgentsForm() {
         }
       })
       .then((data) => {
-        if (!data) {
+        if (data) {
           navigate("/agents");
         } else {
           setErrors(data);
